@@ -128,11 +128,11 @@ QString cin =ui->cin->text();
 if ((id!=0 && salaire!=0 && nomPrenom!="" && login!="" && email!="" && adresse!="" && grade!="" && tel!=0 && cin!="" ))
 {
 
-personnel e( nomPrenom , id , cin , adresse,tel,salaire,grade,email, login);
-  bool test=e.ajouterEmpl();
+personnel p( nomPrenom,id ,cin ,adresse,tel,salaire,grade,email, login);
+  bool test=p.ajouterEmpl();
   if(test)
   {
-   ui->tableView_employe->setModel(etmp.afficher());
+   ui->tableView_employe->setModel(p.afficher());
       QMessageBox::information(nullptr,QObject::tr("ok!"),
                                QObject::tr("employé ajouté avec succès.\n""Cliquez Cancel to exit."),QMessageBox::Cancel);
   }

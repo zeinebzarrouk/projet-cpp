@@ -60,7 +60,7 @@ bool personnel::ajouterEmpl()
     querry.bindValue(":email",email);
     querry.bindValue(":login",login);
  querry.bindValue(":nomPrenom",nomPrenom);
- querry.bindValue(":n_cin",cin);
+ querry.bindValue(":cin",cin);
  querry.bindValue(":adresse",adresse);
     return querry.exec();
 
