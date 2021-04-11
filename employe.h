@@ -32,6 +32,12 @@ private slots:
     void on_supprimer_employe_clicked();
 
     void makeplot();
+    void on_tri_id_clicked();
+
+    void on_tri_grade_clicked();
+
+    void on_tri_nom_clicked();
+
 private:
     Ui::employe *ui;
     personnel etmp;

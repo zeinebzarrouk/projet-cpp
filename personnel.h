@@ -45,6 +45,11 @@ bool supprimer(int);
 bool modifier(int , int, QString);
 
 
+//métiers
 
+
+
+
+QSqlQueryModel *trier_id();
 };
 #endif // PERSONNEL_H

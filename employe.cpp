@@ -232,3 +232,18 @@ void employe::on_supprimer_employe_clicked()
 
 
 }*/
+
+void employe::on_tri_id_clicked()
+{
+ui->tableView_employe->setModel(etmp.trier_id());
+}
+
+void employe::on_tri_grade_clicked()
+{
+
+}
+
+void employe::on_tri_nom_clicked()
+{
+
+}
