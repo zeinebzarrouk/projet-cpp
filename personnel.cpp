@@ -117,8 +117,8 @@ QSqlQueryModel * personnel::trier_id()
     // trier nbre
     QSqlQueryModel * model=new QSqlQueryModel() ;
     model->setQuery("select * from employe order by ID ASC");
-    model->setHeaderData(1, Qt::Horizontal, QObject::tr("ID"));
-    model->setHeaderData(0, Qt::Horizontal, QObject::tr("NOMPRENOM"));
+    model->setHeaderData(0, Qt::Horizontal, QObject::tr("ID"));
+    model->setHeaderData(1, Qt::Horizontal, QObject::tr("NOMPRENOM"));
     model->setHeaderData(2, Qt::Horizontal,QObject::tr("N_CIN"));
     model->setHeaderData(3, Qt::Horizontal,QObject::tr("ADRESSE"));
     model->setHeaderData(4, Qt::Horizontal,QObject::tr("N_TEL"));
@@ -131,10 +131,48 @@ QSqlQueryModel * personnel::trier_id()
 }
 
 
+QSqlQueryModel *personnel::trier_grade()
+{
+
+    QSqlQueryModel * model=new QSqlQueryModel() ;
+    model->setQuery("select * from employe order by grade ASC");
+     model->setHeaderData(0, Qt::Horizontal,QObject::tr("GRADE"));
+    model->setHeaderData(1, Qt::Horizontal, QObject::tr("ID"));
+    model->setHeaderData(2, Qt::Horizontal, QObject::tr("NOMPRENOM"));
+    model->setHeaderData(3, Qt::Horizontal,QObject::tr("N_CIN"));
+    model->setHeaderData(4, Qt::Horizontal,QObject::tr("ADRESSE"));
+    model->setHeaderData(5, Qt::Horizontal,QObject::tr("N_TEL"));
+    model->setHeaderData(6, Qt::Horizontal,QObject::tr("SALAIRE"));
+
+    model->setHeaderData(7, Qt::Horizontal,QObject::tr("EMAIL"));
+    model->setHeaderData(8, Qt::Horizontal,QObject::tr("LOGIN"));
+
+        return model;
 
 
+}
 
 
+QSqlQueryModel *personnel::trier_nom()
+{
+
+    QSqlQueryModel * model=new QSqlQueryModel() ;
+    model->setQuery("select * from employe order by nomPrenom ASC");
+     model->setHeaderData(6, Qt::Horizontal,QObject::tr("GRADE"));
+    model->setHeaderData(1, Qt::Horizontal, QObject::tr("ID"));
+    model->setHeaderData(0, Qt::Horizontal, QObject::tr("NOMPRENOM"));
+    model->setHeaderData(2, Qt::Horizontal,QObject::tr("N_CIN"));
+    model->setHeaderData(3, Qt::Horizontal,QObject::tr("ADRESSE"));
+    model->setHeaderData(4, Qt::Horizontal,QObject::tr("N_TEL"));
+    model->setHeaderData(5, Qt::Horizontal,QObject::tr("SALAIRE"));
+
+    model->setHeaderData(7, Qt::Horizontal,QObject::tr("EMAIL"));
+    model->setHeaderData(8, Qt::Horizontal,QObject::tr("LOGIN"));
+
+        return model;
+
+
+}
 
 
 

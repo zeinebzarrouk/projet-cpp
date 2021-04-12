@@ -48,8 +48,8 @@ bool modifier(int , int, QString);
 //métiers
 
 
-
-
+QSqlQueryModel *trier_grade();
+QSqlQueryModel *trier_nom();
 QSqlQueryModel *trier_id();
 };
 #endif // PERSONNEL_H

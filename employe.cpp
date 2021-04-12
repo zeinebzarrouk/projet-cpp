@@ -240,10 +240,10 @@ ui->tableView_employe->setModel(etmp.trier_id());
 
 void employe::on_tri_grade_clicked()
 {
-
+ui->tableView_employe->setModel(etmp.trier_grade());
 }
 
 void employe::on_tri_nom_clicked()
 {
-
+ui->tableView_employe->setModel(etmp.trier_nom());
 }
