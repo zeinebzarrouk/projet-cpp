@@ -1,0 +1,7 @@
+journaliste:id,nom,prenom,adresse,specialité,num,
+
+
+
+
+
+mission:id,nom,type,localisation
