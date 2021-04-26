@@ -1,6 +1,6 @@
 #ifndef MODIFIER_H
 #define MODIFIER_H
-
+//eae
 #include <QDialog>
 #include <QSqlQuery>
 #include <QtDebug>
