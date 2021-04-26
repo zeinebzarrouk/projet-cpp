@@ -15,7 +15,6 @@ SOURCES += \
     articles.cpp \
     connection.cpp \
     emissions.cpp \
-    historique.cpp \
     main.cpp \
     mainwindow.cpp \
     modifier.cpp \
@@ -26,7 +25,6 @@ HEADERS += \
     articles.h \
     connection.h \
     emissions.h \
-    historique.h \
     mainwindow.h \
     modifier.h \
     modifier2.h \
