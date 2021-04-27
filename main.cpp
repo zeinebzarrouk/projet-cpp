@@ -5,7 +5,7 @@
 #include <QApplication>
 #include <QSqlQuery>
 #include "connection.h"
-#include "modifier.h"
+
 
 void test_requete(QString t,QString R,QString F)
 {

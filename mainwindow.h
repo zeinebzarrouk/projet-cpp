@@ -22,6 +22,8 @@ public:
     void set_a(int n);
     void set_e(int n);
     void actualiser_tab();
+    bool check_id(QString id);
+    bool check_idE(QString id);
 
     //QString get_id();
     ~MainWindow();
@@ -39,7 +41,7 @@ private slots:
 
     void on_pushButton_6_clicked();
 
-    void on_pushButton_7_clicked();
+
 
     void on_pushButton_8_clicked();
 
@@ -60,21 +62,21 @@ private slots:
 
         void on_pushButton_14_clicked();
 
-        void on_pushButton_15_clicked();
+
 
         void on_pushButton_22_clicked();
 
-        void on_pushButton_21_clicked();
 
-        void on_lineEdit_auteur_2_textChanged(const QString &arg1);
 
-        void on_pushButton_9_clicked();
+
+
+
 
         void on_pushButton_16_clicked();
 
         void on_pushButton_17_clicked();
 
-        void on_lineEdit_type_2_cursorPositionChanged(int arg1, int arg2);
+
 
 private:
     Ui::MainWindow *ui;

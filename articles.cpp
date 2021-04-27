@@ -1,5 +1,4 @@
 #include "articles.h"
-#include "ui_Modifier.h"
 #include "ui_mainwindow.h"
 #include <QObject>
 #include <QDateTime>

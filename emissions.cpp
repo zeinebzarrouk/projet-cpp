@@ -174,7 +174,7 @@ if(controle_saisieE(nom_emision,nom_presentateur,id) == -1)
 "ENTITE,"
 "DATEO,"
 "HEUREO)"
-"VALUES ('Modification','Emissionss',?,?);");
+"VALUES ('Modification','Emissions',?,?);");
     req.addBindValue(date_operation);
     req.addBindValue(heure_operation);
     req.exec();

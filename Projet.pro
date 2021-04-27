@@ -17,8 +17,6 @@ SOURCES += \
     emissions.cpp \
     main.cpp \
     mainwindow.cpp \
-    modifier.cpp \
-    modifier2.cpp \
     smtp.cpp
 
 HEADERS += \
@@ -26,14 +24,10 @@ HEADERS += \
     connection.h \
     emissions.h \
     mainwindow.h \
-    modifier.h \
-    modifier2.h \
     smtp.h
 
 FORMS += \
-    mainwindow.ui \
-    modifier.ui \
-    modifier2.ui
+    mainwindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

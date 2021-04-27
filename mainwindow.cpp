@@ -1,8 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "articles.h"
-#include "modifier.h"
-#include "modifier2.h"
 #include <QDebug>
 #include <iostream>
 #include <QMessageBox>
@@ -128,17 +126,59 @@ void MainWindow::on_pushButton_clicked()
 
 }
 
+bool MainWindow::check_id(QString id)
+{
+    QSqlQuery requete;
+
+    //requete.prepare("DELETE FROM ARTICLES WHERE ID=?");
+   // requete.prepare("SELECT ID FROM ARTICLES WHERE ID=?");
+
+
+  //requete.addBindValue(id);
+  int row_count = 0;
+  bool test;
+    requete.prepare("SELECT COUNT(*) FROM ARTICLES WHERE ID=?");
+    requete.addBindValue(id);
+    test = requete.exec();
+    if(requete.first())
+        row_count = requete.value(0).toInt();
+    qDebug() << row_count;
+    if(test == true && row_count !=0)
+    {
+
+
+      qDebug() << "l'id mawjouda" ;
+      //QMessageBox::information(nullptr,QObject::tr("Suppresion") , QObject::tr("id mawjoud!"),QMessageBox::Ok );
+      ui->label_13->setText(id);
+      return  true;
+
+    }
+    else if(test == true && row_count==0)
+    {
+        qDebug() << id << " id inexistante ";
+        QMessageBox::critical(nullptr,QObject::tr("Suppresion") , QObject::tr("Identifiant inexistant"),QMessageBox::Cancel );
+        return  false;
+    }
+    else
+    {
+        qDebug() << "erreur de suppresion";
+        QMessageBox::critical(nullptr,QObject::tr("Suppresion") , QObject::tr("Erreur de suppresion"),QMessageBox::Cancel );
+    }
+}
 void MainWindow::on_pushButton_3_clicked()
 {
-    QString id = ui->lineEdit_idS->text();
+    QString id = ui->lineEdit_id->text();
     bool ba;
-  modifier m;
- ba = m.check_id(id);
+
+
+ ba = check_id(id);
  if(ba)
  {
 
- m.setModal(true);
- m.exec();
+     af.update(id,ui->lineEdit_narticle->text(),ui->lineEdit_auteur->text(),ui->lineEdit_type->text());
+
+
+
  ui->Tab_historique->setModel(afficher_historique());
  ui->Tab_Article->setModel(af.afficher(get_a()));
  ui->Tab_Emissions->setModel(ef.afficher(get_e()));
@@ -177,18 +217,56 @@ void MainWindow::on_pushButton_4_clicked()
     ui->Tab_Emissions->setModel(ef.afficher(get_e()));
     ui->Tab_historique->setModel(afficher_historique());
 }
+ bool MainWindow::check_idE(QString id)
+ {
+     QSqlQuery requete;
 
+     //requete.prepare("DELETE FROM ARTICLES WHERE ID=?");
+    // requete.prepare("SELECT ID FROM ARTICLES WHERE ID=?");
+
+
+   //requete.addBindValue(id);
+   int row_count = 0;
+   bool test;
+     requete.prepare("SELECT COUNT(*) FROM EMISSIONS WHERE ID=?");
+     requete.addBindValue(id);
+     test = requete.exec();
+     if(requete.first())
+         row_count = requete.value(0).toInt();
+     qDebug() << row_count;
+     if(test == true && row_count !=0)
+     {
+
+
+       //qDebug() << "l'id mawjouda" ;
+       //QMessageBox::information(nullptr,QObject::tr("Suppresion") , QObject::tr("id mawjoud!"),QMessageBox::Ok );
+       ui->label_12->setText(id);
+       return  true;
+
+     }
+     else if(test == true && row_count==0)
+     {
+         qDebug() << id << " id inexistante ";
+         QMessageBox::critical(nullptr,QObject::tr("Suppresion") , QObject::tr("Identifiant inexistant"),QMessageBox::Cancel );
+         return  false;
+     }
+     else
+     {
+         qDebug() << "erreur de suppresion";
+         QMessageBox::critical(nullptr,QObject::tr("Suppresion") , QObject::tr("Erreur de recherche"),QMessageBox::Cancel );
+     }
+ }
 void MainWindow::on_pushButton_6_clicked()
 {
-    QString id = ui->lineEdit_idSE->text();
+    QString id = ui->lineEdit_idE->text();
     bool ba;
-  modifier2 m;
- ba = m.check_id(id);
+
+
+ ba = check_idE(id);
  if(ba)
  {
+      ef.update(id,ui->lineEdit_nome->text(),ui->lineEdit_nomp->text());
 
-     m.setModal(true);
-     m.exec();
      ui->Tab_historique->setModel(afficher_historique());
      ui->Tab_Emissions->setModel(ef.afficher(get_e()));
 
@@ -196,11 +274,7 @@ void MainWindow::on_pushButton_6_clicked()
  }
 }
 
-void MainWindow::on_pushButton_7_clicked()
-{
-    ui->Tab_Article->setModel(af.afficher(get_a()));
-    ui->Tab_Emissions->setModel(ef.afficher(get_e()));
-}
+
 
 void MainWindow::on_pushButton_8_clicked()
 {
@@ -350,10 +424,7 @@ void MainWindow::on_pushButton_14_clicked()
                     doc.print(&printer);
 }
 
-void MainWindow::on_pushButton_15_clicked()
-{
 
-}
 
 void MainWindow::on_pushButton_22_clicked()
 {
@@ -410,22 +481,10 @@ void MainWindow::on_pushButton_22_clicked()
                     doc.print(&printer);
 }
 
-void MainWindow::on_pushButton_21_clicked()
-{
 
-}
 
-void MainWindow::on_lineEdit_auteur_2_textChanged(const QString &arg1)
-{
 
-}
 
-void MainWindow::on_pushButton_9_clicked()
-{
-    ui->Tab_Article->setModel(af.afficher(get_a()));
-    ui->Tab_Emissions->setModel(ef.afficher(get_e()));
-    ui->Tab_historique->setModel(afficher_historique());
-}
 
 void MainWindow::on_pushButton_16_clicked()
 {
@@ -560,7 +619,4 @@ void MainWindow::on_pushButton_17_clicked()
                     doc.print(&printer);
 }
 
-void MainWindow::on_lineEdit_type_2_cursorPositionChanged(int arg1, int arg2)
-{
 
-}
