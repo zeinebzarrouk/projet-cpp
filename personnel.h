@@ -52,4 +52,6 @@ QSqlQueryModel *trier_grade();
 QSqlQueryModel *trier_nom();
 QSqlQueryModel *trier_id();
 };
+
+int compterdirecteur();
 #endif // PERSONNEL_H

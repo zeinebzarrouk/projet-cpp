@@ -1,8 +1,9 @@
-QT       += core gui sql
+QT       += core gui sql printsupport network
 
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
-
+TARGET = smtp
+TEMPLATE = app
 CONFIG += c++11
 
 # The following define makes your compiler emit warnings if you use
@@ -17,22 +18,28 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    compter.cpp \
     employe.cpp \
     fonction.cpp \
+    mailing.cpp \
     main.cpp \
     mainwindow.cpp \
     personnel.cpp \
-    qcustomplot/qcustomplot.cpp
+    qcustomplot/qcustomplot.cpp \
+    smtp.cpp
 
 HEADERS += \
     employe.h \
     fonction.h \
+    mailing.h \
     mainwindow.h \
     personnel.h \
-    qcustomplot/qcustomplot.h
+    qcustomplot/qcustomplot.h \
+    smtp.h
 
 FORMS += \
     employe.ui \
+    mailing.ui \
     mainwindow.ui
 
 # Default rules for deployment.
