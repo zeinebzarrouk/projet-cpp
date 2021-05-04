@@ -5,6 +5,7 @@
 #include "module_article.h"
 #include "module_evenement.h"
 #include "module_employe.h"
+#include "module_mission.h"
 
 namespace Ui {
 class menu;
@@ -26,11 +27,14 @@ private slots:
 
     void on_pushButton_2_clicked();
 
+    void on_pushButton_4_clicked();
+
 private:
     Ui::menu *ui;
     module_article Module_article;
     module_evenement Module_evenement;
     employe Module_employe;
+    module_mission Module_mission;
 };
 
 #endif // MENU_H

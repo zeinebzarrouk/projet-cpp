@@ -17,6 +17,7 @@ SOURCES += \
     articles.cpp \
     emissions.cpp \
     module_employe.cpp \
+    module_mission.cpp \
     smtp.cpp  \
     evenements.cpp  \
     participants.cpp  \
@@ -24,6 +25,8 @@ SOURCES += \
     mailing.cpp \
     personnel.cpp \
     qcustomplot/qcustomplot.cpp \
+    mission.cpp  \
+    journaliste.cpp  \
     connection.cpp \
     module_evenement.cpp  \
     module_article.cpp
@@ -33,12 +36,15 @@ HEADERS += \
     menu.h \
     articles.h \
     module_employe.h \
+    module_mission.h \
     participants.h \
     evenements.h \
     fonction.h \
     mailing.h \
     personnel.h \
     qcustomplot/qcustomplot.h \
+    mission.h  \
+    journaliste.h  \
     emissions.h \
     participants.cpp \
     smtp.h  \
@@ -52,7 +58,8 @@ FORMS += \
     module_employe.ui \
     module_evenement.ui \
     mailing.ui \
-    module_article.ui
+    module_article.ui \
+    module_mission.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

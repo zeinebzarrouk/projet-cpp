@@ -38,3 +38,8 @@ void menu::on_pushButton_2_clicked()
 {
     Module_evenement.show();
 }
+
+void menu::on_pushButton_4_clicked()
+{
+    Module_mission.show();
+}
