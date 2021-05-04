@@ -28,3 +28,13 @@ void menu::on_pushButton_clicked()
 {
 afficher_module_article();
 }
+
+void menu::on_pushButton_3_clicked()
+{
+
+}
+
+void menu::on_pushButton_2_clicked()
+{
+    Module_evenement.show();
+}

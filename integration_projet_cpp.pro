@@ -20,6 +20,7 @@ SOURCES += \
     evenements.cpp  \
     participants.cpp  \
     connection.cpp \
+    module_evenement.cpp  \
     module_article.cpp
 
 HEADERS += \
@@ -32,14 +33,19 @@ HEADERS += \
     participants.cpp \
     smtp.h  \
     connection.h \
+    module_evenement.h  \
     module_article.h
 
 FORMS += \
     mainwindow.ui \
     menu.ui \
+    module_evenement.ui \
     module_article.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES += \
+    ressource.qrc

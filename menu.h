@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include "module_article.h"
+#include "module_evenement.h"
 
 namespace Ui {
 class menu;
@@ -20,9 +21,14 @@ public:
 private slots:
     void on_pushButton_clicked();
 
+    void on_pushButton_3_clicked();
+
+    void on_pushButton_2_clicked();
+
 private:
     Ui::menu *ui;
     module_article Module_article;
+    module_evenement Module_evenement;
 };
 
 #endif // MENU_H
