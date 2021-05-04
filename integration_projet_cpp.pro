@@ -16,9 +16,14 @@ SOURCES += \
     menu.cpp \
     articles.cpp \
     emissions.cpp \
+    module_employe.cpp \
     smtp.cpp  \
     evenements.cpp  \
     participants.cpp  \
+    fonction.cpp \
+    mailing.cpp \
+    personnel.cpp \
+    qcustomplot/qcustomplot.cpp \
     connection.cpp \
     module_evenement.cpp  \
     module_article.cpp
@@ -27,8 +32,13 @@ HEADERS += \
     mainwindow.h \
     menu.h \
     articles.h \
+    module_employe.h \
     participants.h \
     evenements.h \
+    fonction.h \
+    mailing.h \
+    personnel.h \
+    qcustomplot/qcustomplot.h \
     emissions.h \
     participants.cpp \
     smtp.h  \
@@ -39,7 +49,9 @@ HEADERS += \
 FORMS += \
     mainwindow.ui \
     menu.ui \
+    module_employe.ui \
     module_evenement.ui \
+    mailing.ui \
     module_article.ui
 
 # Default rules for deployment.

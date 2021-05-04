@@ -31,7 +31,7 @@ afficher_module_article();
 
 void menu::on_pushButton_3_clicked()
 {
-
+    Module_employe.show();
 }
 
 void menu::on_pushButton_2_clicked()

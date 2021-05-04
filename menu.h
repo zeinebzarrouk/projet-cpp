@@ -4,6 +4,7 @@
 #include <QDialog>
 #include "module_article.h"
 #include "module_evenement.h"
+#include "module_employe.h"
 
 namespace Ui {
 class menu;
@@ -29,6 +30,7 @@ private:
     Ui::menu *ui;
     module_article Module_article;
     module_evenement Module_evenement;
+    employe Module_employe;
 };
 
 #endif // MENU_H
