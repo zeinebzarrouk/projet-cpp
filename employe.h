@@ -54,6 +54,8 @@ private slots:
      void StatsPerso();
      void on_mailing_list_clicked();
 
+     void on_imprimer_clicked();
+
 private:
     Ui::employe *ui;
     personnel etmp;

@@ -5,7 +5,11 @@
 #include <QMessageBox>
 #include "mailing.h"
 //#include "statis.h"
-//#include "qcustomplot.h"
+#include "qcustomplot/qcustomplot.h"
+#include <QPainter>
+#include <QPdfWriter>
+#include <QDesktopServices>
+#include <QUrl>
 
 employe::employe(QWidget *parent) :
     QDialog(parent),
@@ -402,4 +406,62 @@ bool employe::verifID()
         return true;
     }
 
+}
+
+void employe::on_imprimer_clicked()
+{
+
+    //QDateTime datecreation = date.currentDateTime();
+            //QString afficheDC = "Date de Creation PDF : " + datecreation.toString() ;
+                   QPdfWriter pdf("");
+                   QPainter painter(&pdf);
+                  int i = 4000;
+                       painter.setPen(Qt::blue);
+                       painter.setFont(QFont("Arial", 30));
+                       painter.drawText(1100,1200,"Liste Du personnel ");
+                       painter.setPen(Qt::black);
+                       painter.setFont(QFont("Arial", 50));
+                       painter.drawRect(100,100,7300,2600);
+
+                       painter.drawRect(0,3000,9600,500);
+                       painter.setFont(QFont("Arial", 9));
+                       painter.drawText(200,3300,"ID");
+                       painter.drawText(3200,3300,"NOMPRENOM");
+                       painter.drawText(3200,3300,"N_CIN");
+                        painter.drawText(3200,3300,"ADRESSE");
+                         painter.drawText(3200,3300,"N_TEL");
+                          painter.drawText(3200,3300,"SALAIRE");
+                           painter.drawText(3200,3300,"GRADE");
+                            painter.drawText(3200,3300,"EMAIL");
+                             painter.drawText(3200,3300,"LOGIN");
+
+
+                       QSqlQuery query;
+                       query.prepare("select * from employe");
+                       query.exec();
+                       while (query.next())
+                       {
+                           painter.drawText(200,i,query.value(0).toString());
+                           painter.drawText(3200,i,query.value(1).toString());
+                           painter.drawText(3200,i,query.value(2).toString());
+                                 painter.drawText(3200,i,query.value(2).toString());
+                                painter.drawText(3200,i,query.value(2).toString());
+                               painter.drawText(3200,i,query.value(2).toString());
+                              painter.drawText(3200,i,query.value(2).toString());
+                              painter.drawText(3200,i,query.value(2).toString());
+                             painter.drawText(3200,i,query.value(2).toString());
+
+
+                          i = i + 500;
+                       }
+                       int reponse = QMessageBox::question(this, "Génerer PDF", "<PDF Enregistré>...Vous Voulez Affichez Le PDF ?", QMessageBox::Yes |  QMessageBox::No);
+                           if (reponse == QMessageBox::Yes)
+                           {
+                               QDesktopServices::openUrl(QUrl::fromLocalFile("emplacement du projet"));
+                               painter.end();
+                           }
+                           if (reponse == QMessageBox::No)
+                           {
+                                painter.end();
+                           }
 }

@@ -25,6 +25,9 @@
    <layout class="QFormLayout" name="formLayout">
     <item row="0" column="0">
      <widget class="QLabel" name="label">
+      <property name="styleSheet">
+       <string notr="true">font: 75 italic 9pt &quot;Georgia&quot;;</string>
+      </property>
       <property name="text">
        <string>smtp-server</string>
       </property>
@@ -32,6 +35,9 @@
     </item>
     <item row="6" column="0">
      <widget class="QLabel" name="label_2">
+      <property name="styleSheet">
+       <string notr="true">font: 75 italic 9pt &quot;Georgia&quot;;</string>
+      </property>
       <property name="text">
        <string>message:</string>
       </property>
@@ -39,6 +45,9 @@
     </item>
     <item row="5" column="0">
      <widget class="QLabel" name="label_3">
+      <property name="styleSheet">
+       <string notr="true">font: 75 italic 9pt &quot;Georgia&quot;;</string>
+      </property>
       <property name="text">
        <string>subject:</string>
       </property>
@@ -46,6 +55,9 @@
     </item>
     <item row="4" column="0">
      <widget class="QLabel" name="label_4">
+      <property name="styleSheet">
+       <string notr="true">font: 75 italic 9pt &quot;Georgia&quot;;</string>
+      </property>
       <property name="text">
        <string>recipant to:</string>
       </property>
@@ -53,6 +65,9 @@
     </item>
     <item row="2" column="0">
      <widget class="QLabel" name="label_5">
+      <property name="styleSheet">
+       <string notr="true">font: 75 italic 9pt &quot;Georgia&quot;;</string>
+      </property>
       <property name="text">
        <string>username:</string>
       </property>
@@ -60,6 +75,9 @@
     </item>
     <item row="3" column="0">
      <widget class="QLabel" name="label_6">
+      <property name="styleSheet">
+       <string notr="true">font: 75 italic 9pt &quot;Georgia&quot;;</string>
+      </property>
       <property name="text">
        <string>password:</string>
       </property>
@@ -67,6 +85,9 @@
     </item>
     <item row="1" column="0">
      <widget class="QLabel" name="label_7">
+      <property name="styleSheet">
+       <string notr="true">font: 75 italic 9pt &quot;Georgia&quot;;</string>
+      </property>
       <property name="text">
        <string>server port</string>
       </property>
@@ -74,6 +95,13 @@
     </item>
     <item row="0" column="1">
      <widget class="QLineEdit" name="server">
+      <property name="styleSheet">
+       <string notr="true">font: 75 italic 9pt &quot;Georgia&quot;;
+color: black;
+border-style:outset;
+border-width:2px;
+border-radius:2px;</string>
+      </property>
       <property name="text">
        <string>smtp.gmail.com</string>
       </property>
@@ -81,25 +109,73 @@
     </item>
     <item row="1" column="1">
      <widget class="QLineEdit" name="port">
+      <property name="styleSheet">
+       <string notr="true">font: 75 italic 9pt &quot;Georgia&quot;;
+color: black;
+border-style:outset;
+border-width:2px;
+border-radius:2px;
+</string>
+      </property>
       <property name="text">
        <string>465</string>
       </property>
      </widget>
     </item>
     <item row="2" column="1">
-     <widget class="QLineEdit" name="uname"/>
+     <widget class="QLineEdit" name="uname">
+      <property name="styleSheet">
+       <string notr="true">font: 75 italic 9pt &quot;Georgia&quot;;
+color: black;
+border-style:outset;
+border-width:2px;
+border-radius:2px;</string>
+      </property>
+     </widget>
     </item>
     <item row="3" column="1">
-     <widget class="QLineEdit" name="paswd"/>
+     <widget class="QLineEdit" name="paswd">
+      <property name="styleSheet">
+       <string notr="true">font: 75 italic 9pt &quot;Georgia&quot;;
+color: black;
+border-style:outset;
+border-width:2px;
+border-radius:2px;</string>
+      </property>
+     </widget>
     </item>
     <item row="4" column="1">
-     <widget class="QLineEdit" name="rcpt"/>
+     <widget class="QLineEdit" name="rcpt">
+      <property name="styleSheet">
+       <string notr="true">font: 75 italic 9pt &quot;Georgia&quot;;
+color: black;
+border-style:outset;
+border-width:2px;
+border-radius:2px;</string>
+      </property>
+     </widget>
     </item>
     <item row="5" column="1">
-     <widget class="QLineEdit" name="subject"/>
+     <widget class="QLineEdit" name="subject">
+      <property name="styleSheet">
+       <string notr="true">font: 75 italic 9pt &quot;Georgia&quot;;
+color: black;
+border-style:outset;
+border-width:2px;
+border-radius:2px;</string>
+      </property>
+     </widget>
     </item>
     <item row="6" column="1">
-     <widget class="QTextEdit" name="msg"/>
+     <widget class="QTextEdit" name="msg">
+      <property name="styleSheet">
+       <string notr="true">font: 75 italic 9pt &quot;Georgia&quot;;
+color: black;
+border-style:outset;
+border-width:2px;
+border-radius:2px;</string>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>
@@ -115,6 +191,9 @@
    <layout class="QHBoxLayout" name="horizontalLayout">
     <item>
      <widget class="QLabel" name="label_8">
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(255, 255, 255);</string>
+      </property>
       <property name="text">
        <string>------------------------------------------------------------------------------------------------------------------------------------</string>
       </property>
@@ -122,6 +201,14 @@
     </item>
     <item>
      <widget class="QPushButton" name="send">
+      <property name="styleSheet">
+       <string notr="true">font: 75 italic 9pt &quot;Georgia&quot;;
+color: black;
+border-style:outset;
+border-width:2px;
+border-radius:2px;
+background-color: rgb(170, 255, 255);</string>
+      </property>
       <property name="text">
        <string>send</string>
       </property>
@@ -129,6 +216,14 @@
     </item>
     <item>
      <widget class="QPushButton" name="exit">
+      <property name="styleSheet">
+       <string notr="true">font: 75 italic 9pt &quot;Georgia&quot;;
+color: black;
+border-style:outset;
+border-width:2px;
+border-radius:2px;
+background-color: rgb(170, 255, 255);</string>
+      </property>
       <property name="text">
        <string>exit</string>
       </property>

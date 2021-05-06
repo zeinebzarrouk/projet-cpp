@@ -23,6 +23,9 @@
       <height>201</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(170, 255, 255);</string>
+    </property>
     <property name="title">
      <string>SIGN IN</string>
     </property>
@@ -34,6 +37,9 @@
        <width>71</width>
        <height>16</height>
       </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">font: 75 italic 9pt &quot;Georgia&quot;;</string>
      </property>
      <property name="text">
       <string>username:</string>
@@ -48,6 +54,9 @@
        <height>16</height>
       </rect>
      </property>
+     <property name="styleSheet">
+      <string notr="true">font: 75 italic 9pt &quot;Georgia&quot;;</string>
+     </property>
      <property name="text">
       <string>password:</string>
      </property>
@@ -60,6 +69,12 @@
        <width>113</width>
        <height>20</height>
       </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color: black;
+border-style:outset;
+border-width:2px;
+border-radius:7px;</string>
      </property>
      <property name="echoMode">
       <enum>QLineEdit::Password</enum>
@@ -74,6 +89,12 @@
        <height>20</height>
       </rect>
      </property>
+     <property name="styleSheet">
+      <string notr="true">color: black;
+border-style:outset;
+border-width:2px;
+border-radius:7px;</string>
+     </property>
     </widget>
     <widget class="QPushButton" name="login">
      <property name="geometry">
@@ -83,6 +104,9 @@
        <width>75</width>
        <height>23</height>
       </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">font: 75 italic 9pt &quot;Georgia&quot;;</string>
      </property>
      <property name="text">
       <string>login</string>
@@ -97,6 +121,9 @@
       <width>351</width>
       <height>16</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 75 italic 9pt &quot;Georgia&quot;;</string>
     </property>
     <property name="text">
      <string>[+]status</string>

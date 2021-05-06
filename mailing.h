@@ -20,6 +20,8 @@ private slots:
 
     void sendMail();
     void mailSent(QString);
+    void on_send_clicked();
+
 private:
     Ui::mailing *ui;
 

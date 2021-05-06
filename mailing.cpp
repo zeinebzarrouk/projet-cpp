@@ -3,6 +3,7 @@
 #include <QMainWindow>
 #include "smtp.h"
 #include <QtWidgets/QMessageBox>
+#include "employe.h"
 
 
 mailing::mailing(QWidget *parent) :
@@ -26,6 +27,10 @@ void mailing::mailSent(QString status)
 {
     if(status == "Message sent")
         QMessageBox::warning( 0, tr( "Qt Simple SMTP client" ), tr( "Message sent!\n\n" ) );
+    this->hide();
+   employe employe;
+    employe.setModal(true);
+    employe.exec();
 }
 
 mailing::~mailing()
@@ -33,3 +38,8 @@ mailing::~mailing()
     delete ui;
 }
 
+
+void mailing::on_send_clicked()
+{
+
+}
