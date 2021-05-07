@@ -49,18 +49,29 @@
 
 #include<QVariant>
 
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    this->setWindowTitle("Gestion article");
+    player = new QMediaPlayer(this);
     ui->Tab_Article->setModel(af.afficher(get_a()));
     ui->Tab_Emissions->setModel(ef.afficher(get_e()));
       ui->Tab_historique->setModel(afficher_historique());
 
+      ui->Tab_alarme->setModel(al.afficher());
+      ui->dateEdit->setDate(QDate::currentDate());
+      ui->dateEdit->setMaximumDate(QDate::currentDate().addDays(365));
+      ui->dateEdit->setMinimumDate(QDate::currentDate());
+      timer = new QTimer();
+      timer->setSingleShot(true);
+      timer->start(5000);
 
+      int ret = ad.connect_arduino();
 
-
+    QObject::connect(timer,SIGNAL(timeout()),this,SLOT(fintempo()));
     connect(ui->pushButton_20, SIGNAL(clicked()),this, SLOT(sendMail2()));
     connect(ui->pushButton_13, SIGNAL(clicked()),this, SLOT(sendMail()));
     //connect(ui->pushButton, SIGNAL(clicked()),this, SLOT(close()));
@@ -89,19 +100,68 @@ void MainWindow::set_a(int n){a = n;}
 int MainWindow::get_e(){return e;}
 void MainWindow::set_e(int n){e = n;}
 
+void MainWindow::fintempo()
 
+{
+
+ //mon code après la temporisation
+    QString alarm ="";
+    alarm = al.comparaison();
+    if(alarm !="")
+    {
+        QString tempActuelle = QDateTime::currentDateTime().toString("hh:mm");
+      //  QString message = "Il est " + tempActuelle + " c'est l'heure pour " + alarm;
+        //detection d'une alarme
+        QSqlQuery requete;
+      requete.prepare("DELETE FROM ALARME WHERE NOM_ALARME=?");
+      requete.addBindValue(alarm);
+      requete.exec();
+      ad.write_to_arduino("2");
+      QMessageBox::information(nullptr,QObject::tr("Alarme") , "Il est " + tempActuelle + " c'est l'heure pour  '" + alarm + "'",QMessageBox::Ok );
+      ui->Tab_alarme->setModel(al.afficher());
+
+    }
+
+    timer->start(5000);
+
+
+}
+void MainWindow::on_pushButton_7_clicked()
+{
+QString d,h,n;
+h = ui->timeEdit->text();
+d= ui->dateEdit->text();
+n = ui->lineEdit->text();
+al.ajouter(h,d,n);
+ui->Tab_alarme->setModel(al.afficher());
+}
+void MainWindow::on_pushButton_9_clicked()
+{
+    QString nom=ui->lineEdit_2->text();
+    al.supprimer(nom);
+    ui->Tab_alarme->setModel(al.afficher());
+
+}
 
 void MainWindow::on_pushButton_2_clicked()
 {
     Articles a;
-
+   bool testA=false;
 
 
     a.set_nom_auteur(ui->lineEdit_auteur->text());
     a.set_nom_article(ui->lineEdit_narticle->text());
     a.set_id(ui->lineEdit_id->text());
     a.set_type(ui->lineEdit_type->text());
-    a.ajouter();
+   testA =  a.ajouter();
+   qDebug() << testA;
+   if(testA)
+   {
+       player->setMedia(QUrl::fromLocalFile("C:/Users/sofia/OneDrive/Documents/Projet/Vocaroo 01 May 2021 15_10_44 GMT+0100 18TTSMXp7FVV.mp3"));
+       player->play();
+        QMessageBox::information(nullptr,QObject::tr("Ajout") , QObject::tr("L'ajout de l'article a été effectué avec succés!"),QMessageBox::Ok );
+
+   }
 
 
     ui->lineEdit_auteur->setText("");
@@ -113,13 +173,22 @@ void MainWindow::on_pushButton_2_clicked()
 
 
 
+
 }
 
 
 void MainWindow::on_pushButton_clicked()
 {
+    int test = 0;
     Articles A1;A1.set_id(ui->lineEdit_idS->text());
-    A1.supprimer(A1.get_id());
+    test = A1.supprimer(A1.get_id());
+    if(test == 1)
+    {
+        player->setMedia(QUrl::fromLocalFile("C:/Users/sofia/OneDrive/Documents/Projet/Vocaroo 01 May 2021 15_11_06 GMT+0100 1mnCuCMOJjsz.mp3"));
+        player->play();
+        QMessageBox::information(nullptr,QObject::tr("Suppresion") , QObject::tr("Suppression effectué avec succés!"),QMessageBox::Ok );
+    }
+
     ui->Tab_Article->setModel(af.afficher(get_a()));
     ui->Tab_historique->setModel(afficher_historique());
 
@@ -168,15 +237,22 @@ bool MainWindow::check_id(QString id)
 void MainWindow::on_pushButton_3_clicked()
 {
     QString id = ui->lineEdit_id->text();
-    bool ba;
+    bool ba = false;
+    bool bc = false;
 
 
  ba = check_id(id);
  if(ba)
  {
 
-     af.update(id,ui->lineEdit_narticle->text(),ui->lineEdit_auteur->text(),ui->lineEdit_type->text());
+     bc = af.update(id,ui->lineEdit_narticle->text(),ui->lineEdit_auteur->text(),ui->lineEdit_type->text());
+     if(bc == true)
+     {
+         player->setMedia(QUrl::fromLocalFile(" C:/Users/sofia/OneDrive/Documents/Projet/Vocaroo 01 May 2021 15_11_17 GMT+0100 1iIDWnSpcDXm.mp3"));
+         player->play();
 
+
+     }
 
 
  ui->Tab_historique->setModel(afficher_historique());
@@ -192,13 +268,22 @@ void MainWindow::on_pushButton_5_clicked()
     emissions a;
 
 
-    QString ageS="",tr="";
+    bool testE=false;
     a.set_nom_emision(ui->lineEdit_nome->text());
     a.set_nom_presentateur(ui->lineEdit_nomp->text());
     a.set_id(ui->lineEdit_idE->text());
-    a.ajouter();
+    testE = a.ajouter();
     //ageS = ui->lineEdit_4->text();
     //a.setage(ageS.toInt());
+    qDebug() << testE;
+    if(testE == true)
+    {
+        player->setMedia(QUrl::fromLocalFile("C:/Users/sofia/OneDrive/Documents/Projet/Vocaroo 01 May 2021 15_10_44 GMT+0100 18TTSMXp7FVV.mp3"));
+        player->play();
+
+
+
+    }
 
 
     ui->lineEdit_nome->setText("");
@@ -212,8 +297,16 @@ void MainWindow::on_pushButton_5_clicked()
 
 void MainWindow::on_pushButton_4_clicked()
 {
+    int test = 0;
     emissions E1;E1.set_id(ui->lineEdit_idSE->text());
-    E1.supprimer(E1.get_id());
+    test = E1.supprimer(E1.get_id());
+    if(test)
+    {
+        player->setMedia(QUrl::fromLocalFile("C:/Users/sofia/OneDrive/Documents/Projet/Vocaroo 01 May 2021 15_11_06 GMT+0100 1mnCuCMOJjsz.mp3"));
+        player->play();
+
+
+    }
     ui->Tab_Emissions->setModel(ef.afficher(get_e()));
     ui->Tab_historique->setModel(afficher_historique());
 }
@@ -240,7 +333,7 @@ void MainWindow::on_pushButton_4_clicked()
 
        //qDebug() << "l'id mawjouda" ;
        //QMessageBox::information(nullptr,QObject::tr("Suppresion") , QObject::tr("id mawjoud!"),QMessageBox::Ok );
-       ui->label_12->setText(id);
+
        return  true;
 
      }
@@ -259,13 +352,21 @@ void MainWindow::on_pushButton_4_clicked()
 void MainWindow::on_pushButton_6_clicked()
 {
     QString id = ui->lineEdit_idE->text();
-    bool ba;
+    bool ba=false;
+    bool bc=false;
 
 
  ba = check_idE(id);
  if(ba)
  {
-      ef.update(id,ui->lineEdit_nome->text(),ui->lineEdit_nomp->text());
+      bc = ef.update(id,ui->lineEdit_nome->text(),ui->lineEdit_nomp->text());
+      if(bc == true)
+      {
+          player->setMedia(QUrl::fromLocalFile("C:/Users/sofia/OneDrive/Documents/Projet/Vocaroo 01 May 2021 15_11_17 GMT+0100 1iIDWnSpcDXm.mp3"));
+          player->play();
+
+
+      }
 
      ui->Tab_historique->setModel(afficher_historique());
      ui->Tab_Emissions->setModel(ef.afficher(get_e()));
@@ -342,21 +443,62 @@ void MainWindow::sendMail()
 {
     Smtp* smtp = new Smtp("sofiene.fenniche1@gmail.com", "besbes13", "smtp.gmail.com", 465);
     connect(smtp, SIGNAL(status(QString)), this, SLOT(mailSent(QString)));
+    QString email = ui->lineEdit_type_2->text();
+    int i,p,a;
+    p=0;
+    a=0;
+    for(i=0;i<email.length();i++)
+    {
+        if(email[i] == ".")
+         p++;
+        else if(email[i] == "@")
+            a++;
+
+
+    }
+ if(email == "")
+      QMessageBox::warning( 0, tr( "Qt Simple SMTP client" ), tr( "le champ email est vide !\n\n" ) );
+else if(p == 1 && a == 1)
+{
 
     if( !files.isEmpty() )
         smtp->sendMail("sofiene.fenniche1@gmail.com", ui->lineEdit_type_2->text() ,"QT TEST ","L'envoye d'un mail ", files );
     else
         smtp->sendMail("sofiene.fenniche1@gmail.com",ui->lineEdit_type_2->text(), "QT TEST","eaeara");
 }
+else
+     QMessageBox::warning( 0, tr( "Qt Simple SMTP client" ), tr( "Le mail est invalide !" ) );
+
+}
 void MainWindow::sendMail2()
 {
     Smtp* smtp = new Smtp("sofiene.fenniche1@gmail.com", "besbes13", "smtp.gmail.com", 465);
     connect(smtp, SIGNAL(status(QString)), this, SLOT(mailSent(QString)));
+    QString email = ui->lineEdit_type_9->text();
+    int i,p,a;
+    p=0;
+    a=0;
+    for(i=0;i<email.length();i++)
+    {
+        if(email[i] == ".")
+         p++;
+        else if(email[i] == "@")
+            a++;
 
+
+    }
+
+if(email == "")
+    QMessageBox::warning( 0, tr( "Qt Simple SMTP client" ), tr( "le champ email est vide !\n\n" ) );
+else if(p==1 && a==1)
+{
     if( !files.isEmpty() )
         smtp->sendMail("sofiene.fenniche1@gmail.com", ui->lineEdit_type_9->text() ,"QT TEST ","L'envoye d'un mail ", files );
     else
         smtp->sendMail("sofiene.fenniche1@gmail.com",ui->lineEdit_type_9->text(), "QT TEST","eaeara");
+}
+else
+   QMessageBox::warning( 0, tr( "Qt Simple SMTP client" ), tr( "Le mail est invalide !" ) );
 }
 
 void MainWindow::mailSent(QString status)
@@ -489,6 +631,7 @@ void MainWindow::on_pushButton_22_clicked()
 void MainWindow::on_pushButton_16_clicked()
 {
     QMessageBox msgBox;
+
     msgBox.setText("Voulez vous vraiment faire une réinisialisation de l'hitorique , les données seront perdus");
     //msgBox.setInformativeText("Do you want to save your changes?");
     msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
@@ -618,5 +761,9 @@ void MainWindow::on_pushButton_17_clicked()
                     doc.setPageSize(printer.pageRect().size()); // This is necessary if you want to hide the page number
                     doc.print(&printer);
 }
+
+
+
+
 
 

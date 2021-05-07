@@ -12,7 +12,7 @@ QString emissions::get_id(){return id;}
 void emissions::set_nom_emision(QString n) {nom_emision = n;}
 void emissions::set_nom_presentateur(QString n) {nom_presentateur = n;}
 void emissions::set_id(QString n){id = n;}
-void emissions::ajouter()
+bool emissions::ajouter()
 {
     QSqlQuery requete;
     int row_count = 0;
@@ -28,12 +28,14 @@ void emissions::ajouter()
           //meme pas exec
           qDebug() << "Erreur ajout d'emission" ;
           QMessageBox::critical(nullptr,QObject::tr("Ajout") , QObject::tr("Erreur d'ajout d'emission"),QMessageBox::Ok );
+          return false;
       }
       else if(test == true && row_count!=0)
       {
           //deja existante
           qDebug() << "Identifiant deja existant !" ;
           QMessageBox::critical(nullptr,QObject::tr("Ajout") , QObject::tr("Identifiant deja existant !"),QMessageBox::Ok );
+          return false;
       }
       else
       {
@@ -68,8 +70,11 @@ void emissions::ajouter()
                qDebug() << "Erreur ajout historique";
            qDebug() << "emission ajouter avec sucées !";
             QMessageBox::information(nullptr,QObject::tr("Ajout") , QObject::tr("L'ajout de l'emission a été effectué avec succés!"),QMessageBox::Ok );
+            return true;
 
        }
+       else
+           return false;
       }
 
 
@@ -218,7 +223,7 @@ QSqlQueryModel* emissions::afficher(int a)
 
     return model;
 }
-void emissions::supprimer(QString id)
+int emissions::supprimer(QString id)
 {
     QSqlQuery requete;
 
@@ -255,12 +260,14 @@ void emissions::supprimer(QString id)
       requete.exec();
       qDebug() << "Suppression effectué avec succés" ;
       QMessageBox::information(nullptr,QObject::tr("Suppresion") , QObject::tr("Suppression effectué avec succés!"),QMessageBox::Ok );
+      return 1;
 
     }
     else if(test == true && row_count==0)
     {
         qDebug() << id << " n'existe pas et donc ne peux pas etre supprime";
         QMessageBox::critical(nullptr,QObject::tr("Suppresion") , QObject::tr("Identifiant inexistant"),QMessageBox::Cancel );
+        return 0;
     }
     else
     {

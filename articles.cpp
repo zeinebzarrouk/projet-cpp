@@ -16,7 +16,7 @@ void Articles::set_nom_article(QString n) {nom_articles = n;}
 void Articles::set_nom_auteur(QString n) {nom_auteur = n;}
 void Articles::set_type(QString n) {type = n;}
 void Articles::set_id(QString n){id = n;}
-void Articles::ajouter()
+bool Articles::ajouter()
 {
     QSqlQuery requete;
     int row_count = 0;
@@ -32,12 +32,14 @@ void Articles::ajouter()
           //meme pas exec
           qDebug() << "Erreur ajout d'article" ;
           QMessageBox::critical(nullptr,QObject::tr("Ajout") , QObject::tr("Erreur d'ajout d'article"),QMessageBox::Ok );
+          return false;
       }
       else if(test == true && row_count!=0)
       {
           //deja existante
           qDebug() << "Identifiant deja existant !" ;
           QMessageBox::critical(nullptr,QObject::tr("Ajout") , QObject::tr("Identifiant deja existant !"),QMessageBox::Ok );
+          return false;
       }
       else
       {
@@ -73,9 +75,14 @@ void Articles::ajouter()
            if(!requete.exec())
                qDebug() << "Erreur ajout historique";
            qDebug() << "Article ajouter avec sucées !";
-            QMessageBox::information(nullptr,QObject::tr("Ajout") , QObject::tr("L'ajout de l'article a été effectué avec succés!"),QMessageBox::Ok );
+
+           return true;
+
+
 
        }
+       else
+           return false;
       }
 
 
@@ -254,7 +261,7 @@ QSqlQueryModel* Articles::afficher(int a)
     return model;
 }
 
-void Articles::supprimer(QString id)
+int Articles::supprimer(QString id)
 {
     QSqlQuery requete;
 
@@ -290,18 +297,20 @@ void Articles::supprimer(QString id)
       requete.addBindValue(id);
       requete.exec();
       qDebug() << "Suppression effectué avec succés" ;
-      QMessageBox::information(nullptr,QObject::tr("Suppresion") , QObject::tr("Suppression effectué avec succés!"),QMessageBox::Ok );
+      return 1;
 
     }
     else if(test == true && row_count==0)
     {
         qDebug() << id << " n'existe pas et donc ne peux pas etre supprime";
         QMessageBox::critical(nullptr,QObject::tr("Suppresion") , QObject::tr("Identifiant inexistant"),QMessageBox::Cancel );
+        return 0;
     }
     else
     {
         qDebug() << "erreur de suppresion";
         QMessageBox::critical(nullptr,QObject::tr("Suppresion") , QObject::tr("Erreur de suppresion"),QMessageBox::Cancel );
+        return 0;
     }
 
   //qDebug() << test;

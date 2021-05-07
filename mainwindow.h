@@ -6,6 +6,12 @@
 #include "emissions.h"
 #include "smtp.h"
 #include <QFileDialog>
+#include <QMediaPlayer>
+#include <QTimer>
+#include <QDateTime>
+#include "alarme.h"
+#include "arduino.h"
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -59,6 +65,7 @@ private slots:
         void mailSent(QString);
         void browse();
         void browse2();
+        void fintempo();
 
         void on_pushButton_14_clicked();
 
@@ -78,9 +85,17 @@ private slots:
 
 
 
+        void on_pushButton_7_clicked();
+
+        void on_pushButton_9_clicked();
+
 private:
     Ui::MainWindow *ui;
+    QMediaPlayer* player;
     int a,e;
+    arduino ad;
+    QTimer *timer;
+    Alarme al;
    Articles af;
    emissions ef;
    QStringList files;
