@@ -106,5 +106,48 @@ model->setHeaderData(0, Qt::Horizontal, QObject::tr("id"));
 
     return model;
 }
+journalisteh::journalisteh()
+{
+nom="";
+datee="";
+fn="";
+}
+journalisteh::journalisteh(QString nom,QString datee,QString fn)
+{
+    this->nom=nom;
+    this->datee=datee;
+    this->fn=fn ;
+}
+QString journalisteh::get_datee(){return  datee;}
+QString journalisteh::get_fn(){return  fn;}
+QString journalisteh::get_nom(){return  nom;}
+bool journalisteh::ajoutehis()
+{
+    QSqlQuery query;
+    query.prepare("INSERT INTO historiquek (NOM, DATEE, FN) "
+                  "VALUES (:nom, :datee, :fn)");
+    query.bindValue(":nom", nom);
+    query.bindValue(":datee", datee);
+    query.bindValue(":fn", fn);
+    return    query.exec();
+}
+bool journalisteh::modifierhis()
+{
+    QSqlQuery query;
+    query.prepare("UPDATE historiquek SET datee='"+datee+"',fn='"+fn+"' where nom='"+nom+"'  ;");
+    query.bindValue(":nom",nom);
+    query.bindValue(":datee", datee);
+    query.bindValue(":fn", fn);
+    return    query.exec();
+}
+QSqlQueryModel * journalisteh::afficherhis()
+{
+    QSqlQueryModel * model= new QSqlQueryModel();
+    model->setQuery("select * from historiquek");
+    model->setHeaderData(0, Qt::Horizontal, QObject::tr("NOM"));
+    model->setHeaderData(1, Qt::Horizontal, QObject::tr("date "));
+    model->setHeaderData(2, Qt::Horizontal, QObject::tr("fonction "));
+        return model;
 
+}
 

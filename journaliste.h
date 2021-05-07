@@ -38,6 +38,21 @@ private:
     int id,num;
     QString nom,prenom,specialite,adresse;
 };
+class journalisteh
+{
+public:
+       journalisteh() ;
+       journalisteh(QString,QString,QString) ;
+       QString get_nom();
+       QString get_datee();
+       QString get_fn();
+       QSqlQueryModel * afficherhis() ;
+       bool ajoutehis();
+       bool modifierhis() ;
+private:
+
+    QString nom,datee,fn ;
+};
 
 
 #endif // JOURNALISTE_H

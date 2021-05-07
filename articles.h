@@ -18,9 +18,9 @@ public:
     void set_nom_article(QString n);
     void set_type(QString n);
     void set_id(QString n);
-    void ajouter();
+    bool ajouter();
     QSqlQueryModel* afficher(int a);
-    void supprimer(QString id);
+    int supprimer(QString id);
     bool update(QString id,QString nom,QString auteur,QString type);
     int controle_saisieA(QString id,QString nom,QString auteur,QString type);
 

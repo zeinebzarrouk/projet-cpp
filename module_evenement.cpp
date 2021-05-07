@@ -1,12 +1,13 @@
 
+#include "module_evenement.h"
+#include "ui_module_evenement.h"
 #include <QMessageBox>
 #include<QIntValidator>
 #include "participants.h"
 #include"evenements.h"
 #include <QtPrintSupport/QPrinter>
 #include<QtPrintSupport/QPrintDialog>
-#include "module_evenement.h"
-#include "ui_module_evenement.h"
+
 #include<QDialog>
 #include<QFileInfo>
 #include<QFileDialog>
@@ -16,20 +17,44 @@
 #include<QDebug>
 #include <QDateTime>
 
+#include<QMediaPlayer>
 
-//#include<QMediaPlayer>
 //#include<QvideoWidget>
 
 
+#include <QDesktopServices>
+#include<QUrl>
+
+
+
 module_evenement::module_evenement(QWidget *parent)
-    : QDialog(parent),
-     ui(new Ui::module_evenement)
+    : QDialog(parent)
+    , ui(new Ui::module_evenement)
 {
 
 
      ui->setupUi(this);
      this->setWindowTitle("Module evenement");
-/*
+     QValidator *validator_String=new QRegExpValidator(QRegExp("[A-Za-z ' ']+"),this);
+             ui->lineEdit_NOM->setValidator(validator_String);
+             ui->lineEdit_PRENOM->setValidator(validator_String);
+             ui->lineEdit_NOMEV->setValidator(validator_String);
+             //ui->lineEdit_NOM_2->setValidator(validator_String);
+             //ui->lineEdit_PRENOM_2->setValidator(validator_String);
+
+             ui->lineEdit_CAP->setValidator(new QIntValidator(10000000,99999999,this));
+             ui->lineEdit_ID->setValidator(new QIntValidator(10000000,99999999,this));
+              ui->lineEdit_IDEV->setValidator(new QIntValidator(10000000,99999999,this));
+             ui->lineEdit_AGE->setValidator(new QIntValidator(1,99,this));
+
+
+     //horloge
+     timer= new QTimer(this);
+     connect(timer,SIGNAL(timeout()), this, SLOT(myfunction()));
+     timer->start(1000);
+
+
+
     mMediaPlayer = new QMediaPlayer(this);
 
     connect(mMediaPlayer, &QMediaPlayer::positionChanged, [&](qint64 pos) {
@@ -41,7 +66,7 @@ module_evenement::module_evenement(QWidget *parent)
                                });
 
 
-   player = new QMediaPlayer(this);
+  /* player = new QMediaPlayer(this);
    // vw = new QVideoWidget(this);
     player->setVideoOutput(vw);
     //this->setCentralWidget(vw);
@@ -100,18 +125,13 @@ module_evenement::~module_evenement()
 }
 
 /*void MainWindow::on_actionSon_triggered()
-
     {
 
-      son->play();
+     // son->play();
 
     }*/
 
-/*Widget::~Widget()
-{
-    delete ui;
-}
-*/
+
 
 void module_evenement::on_pushButton_clicked()
 {
@@ -131,7 +151,7 @@ void module_evenement::on_pushButton_clicked()
       QMessageBox::information(nullptr,QObject::tr("OK"),QObject::tr("ajout effectue \n click cancel to exit."), QMessageBox::Cancel);
   }
 
-  ui->stackedWidget->setCurrentIndex(1);
+  ui->tabWidget->setCurrentIndex(1);
 
 
 }
@@ -139,7 +159,7 @@ void module_evenement::on_pushButton_clicked()
 void module_evenement::on_pushButton_2_clicked()
 {
     participants p;
-    ui->tableView->setModel(p.afficher());
+    ui->tableView_2->setModel(p.afficher());
 }
 
 void module_evenement::on_pushButton_3_clicked()
@@ -244,7 +264,7 @@ void module_evenement::on_pushButton_8_clicked()
 void module_evenement::on_pushButton_9_clicked()
 {
     evenement e;
-    ui->tableView_2->setModel(e.afficher());
+    ui->tableView->setModel(e.afficher());
 }
 
 
@@ -278,15 +298,8 @@ void module_evenement::on_pushButton_10_clicked()
 
 }
 
-/*void module_evenement::on_pushButton_11_clicked()
-{
 
-    participants p;
-    ui->label_25->setNum(((p.stati1())*100/p.nb_total()));
-    ui->label_26->setNum(((p.stati())*100/p.nb_total()));
 
-}
-*/
 
 void module_evenement::on_pushButton_12_clicked()
 {
@@ -325,23 +338,23 @@ void module_evenement::on_pushButton_12_clicked()
 
 void module_evenement::on_pushButton_5_clicked()
 {
-   ui->stackedWidget_2->setCurrentIndex(2);
+   ui->tabWidget->setCurrentIndex(2);
 }
 
 void module_evenement::on_pushButton_6_clicked()
 {
-    ui->stackedWidget->setCurrentIndex(1);
+    ui->tabWidget->setCurrentIndex(1);
 }
 
 
 void module_evenement::on_pushButton_13_clicked()
 {
-     ui->stackedWidget->setCurrentIndex(0);
+     ui->tabWidget->setCurrentIndex(0);
 }
 
 void module_evenement::on_pushButton_14_clicked()
 {
-    ui->stackedWidget->setCurrentIndex(0);
+    ui->tabWidget->setCurrentIndex(0);
 }
 
 void module_evenement::on_pushButton_15_clicked()
@@ -434,9 +447,22 @@ text=ui->line_recherche_critere->text();
 
 
 
-void module_evenement::myfunction()
+/*void MainWindow::finTempo()
+
 {
     /*
+
+    qDebug() <<"update..";
+
+    //monTimer->setSingleShot(true); //active le mode singleShot
+             //monTimer->start(15000); //démarre une tempo de 15 secondes
+
+}
+*/
+
+void module_evenement::myfunction()
+{
+
     QTime time =QTime::currentTime();
     QString time_text =time.toString("hh : mm : ss");
     if ((time.second()%2 ==0 ))
@@ -445,8 +471,10 @@ void module_evenement::myfunction()
         time_text[3]=' ';
     }
     ui->label_date_time->setText(time_text);
-    */
+
 }
+
+
 
 
 
@@ -459,6 +487,7 @@ void module_evenement::myfunction()
 
 void module_evenement::on_pushButton_login_clicked()
 {
+    /*
     QString username= ui->lineEdit_username->text();
     QString password= ui->lineEdit_password->text();
 
@@ -469,15 +498,72 @@ void module_evenement::on_pushButton_login_clicked()
             {
         }
     }
+    */
 }
 
 
+void module_evenement::on_open_clicked()
+{
+
+   QString filename= QFileDialog::getOpenFileName(this, "open");
+    if (filename.isEmpty()){
+        return;
+    }
+    mMediaPlayer->setMedia(QUrl::fromLocalFile(filename));
+            mMediaPlayer->setVolume(ui->volume->value());
+    on_play_clicked();
+
+}
+
+void module_evenement::on_play_clicked()
+{
+    mMediaPlayer->play();
+}
+
+void module_evenement::on_pause_clicked()
+{
+    mMediaPlayer->pause();
+}
+
+void module_evenement::on_stop_clicked()
+{
+    mMediaPlayer->stop();
+}
+
+void module_evenement::on_mute_clicked()
+{
+    if (ui->mute->text() == "Mute")
+    { mMediaPlayer->setMuted(true);
+        ui->mute->setText("Unmute");}
+    else { mMediaPlayer->setMuted(false);
+        ui->mute->setText("Mute");
+    }
+    mMediaPlayer->setMuted(true);
+
+}
+
+void module_evenement::on_volume_valueChanged(int value)
+{
+
+ mMediaPlayer->setVolume(value);
+}
 
 
+void module_evenement::on_pushButton_imprimer_clicked()
+{
+    QPrinter printer;
+        printer.setPrinterName("zeineb");
+        QPrintDialog dialog(&printer, this);
+        if (dialog.exec() == QDialog::Rejected) return;
+       // ui->afficherPOSTE->render(&printer);
+   ui->tableView->render(&printer);
+}
 
-
-
-
+void module_evenement::on_web_clicked()
+{
+    QString link="www.google.com";
+    QDesktopServices::openUrl(QUrl(link));
+}
 
 
 

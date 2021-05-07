@@ -36,10 +36,22 @@ private slots:
 
     void on_pushButton_7_clicked();
 
+    void on_pushButton_8_clicked();
+
+    void on_pushButton_11_clicked();
+    bool verifID();
+    bool verifNOM();
+     bool verifID1();
+     bool verifNOM1();
+     bool verifPRENOM();
+     bool verifSPECIALITE();
+     bool verifNUM();
+
 private:
     Ui::module_mission *ui;
     journaliste tmpjournaliste;
     mission tmpmission;
+    journalisteh tmph;
 };
 
 #endif // MODULE_MISSION_H

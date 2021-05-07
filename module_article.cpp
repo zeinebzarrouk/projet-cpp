@@ -10,6 +10,11 @@
 #include <QtWidgets>
 #include<QtPrintSupport/QPrinter>
 #include <QSystemTrayIcon>
+#include <QTimer>
+#include <QDateTime>
+#include "alarme.h"
+#include "arduino.h"
+
 
 #include<QPdfWriter>
 
@@ -54,10 +59,24 @@ module_article::module_article(QWidget *parent)
      ui(new Ui::module_article)
 {
     ui->setupUi(this);
-
+    this->setWindowTitle("Module articles");
+    popUp = new PopUp();
+    player = new QMediaPlayer(this);//init player
     ui->Tab_Article->setModel(af.afficher(get_a()));
     ui->Tab_Emissions->setModel(ef.afficher(get_e()));
       ui->Tab_historique->setModel(afficher_historique());
+
+      ui->Tab_alarme->setModel(al.afficher());//cree tab_alarme
+      ui->dateEdit->setDate(QDate::currentDate());
+      ui->dateEdit->setMaximumDate(QDate::currentDate().addDays(365));
+      ui->dateEdit->setMinimumDate(QDate::currentDate());
+
+      timer = new QTimer();
+      timer->setSingleShot(true);
+      timer->start(5000);
+
+      int ret = ad.connect_arduino();
+      QObject::connect(timer,SIGNAL(timeout()),this,SLOT(fintempo()));
 
 
 
@@ -90,19 +109,71 @@ void module_article::set_a(int n){a = n;}
 int module_article::get_e(){return e;}
 void module_article::set_e(int n){e = n;}
 
+void module_article::fintempo()
 
+{
+
+ //mon code après la temporisation
+    QString alarm ="";
+    alarm = al.comparaison();
+    if(alarm !="")
+    {
+        QString tempActuelle = QDateTime::currentDateTime().toString("hh:mm");
+      //  QString message = "Il est " + tempActuelle + " c'est l'heure pour " + alarm;
+        //detection d'une alarme
+        QSqlQuery requete;
+      requete.prepare("DELETE FROM ALARME WHERE NOM_ALARME=?");
+      requete.addBindValue(alarm);
+      requete.exec();
+      ad.write_to_arduino("2");
+      QString chaine = "Il est " + tempActuelle + " c'est l'heure pour  '" + alarm + "'";
+      popUp->setPopupText(chaine);
+
+          popUp->show();
+      QMessageBox::information(nullptr,QObject::tr("Alarme") , "Il est " + tempActuelle + " c'est l'heure pour  '" + alarm + "'",QMessageBox::Ok );
+      ui->Tab_alarme->setModel(al.afficher());
+
+    }
+
+    timer->start(5000);
+
+
+}
+void module_article::on_pushButton_7_clicked()
+{
+QString d,h,n;
+h = ui->timeEdit->text();
+d= ui->dateEdit->text();
+n = ui->lineEdit->text();
+al.ajouter(h,d,n);
+ui->Tab_alarme->setModel(al.afficher());
+}
+void module_article::on_pushButton_9_clicked()
+{
+    QString nom=ui->lineEdit_2->text();
+    al.supprimer(nom);
+    ui->Tab_alarme->setModel(al.afficher());
+}
 
 void module_article::on_pushButton_2_clicked()
 {
     Articles a;
 
-
+bool testA = false;
 
     a.set_nom_auteur(ui->lineEdit_auteur->text());
     a.set_nom_article(ui->lineEdit_narticle->text());
     a.set_id(ui->lineEdit_id->text());
     a.set_type(ui->lineEdit_type->text());
-    a.ajouter();
+    testA =  a.ajouter();
+    qDebug() << testA;
+    if(testA)
+    {
+        player->setMedia(QUrl::fromLocalFile("C:/Users/sofia/OneDrive/Documents/integration_projet_cpp/ajout.mp3"));
+        player->play();
+         QMessageBox::information(nullptr,QObject::tr("Ajout") , QObject::tr("L'ajout de l'article a été effectué avec succés!"),QMessageBox::Ok );
+
+    }
 
 
     ui->lineEdit_auteur->setText("");
@@ -119,8 +190,15 @@ void module_article::on_pushButton_2_clicked()
 
 void module_article::on_pushButton_clicked()
 {
+    int test = 0;
     Articles A1;A1.set_id(ui->lineEdit_idS->text());
-    A1.supprimer(A1.get_id());
+    test = A1.supprimer(A1.get_id());
+    if(test == 1)
+    {
+        player->setMedia(QUrl::fromLocalFile("C:/Users/sofia/OneDrive/Documents/integration_projet_cpp/suppression.mp3"));
+        player->play();
+        QMessageBox::information(nullptr,QObject::tr("Suppresion") , QObject::tr("Suppression effectué avec succés!"),QMessageBox::Ok );
+    }
     ui->Tab_Article->setModel(af.afficher(get_a()));
     ui->Tab_historique->setModel(afficher_historique());
 
@@ -169,15 +247,22 @@ bool module_article::check_id(QString id)
 void module_article::on_pushButton_3_clicked()
 {
     QString id = ui->lineEdit_id->text();
-    bool ba;
+    bool ba = false;
+    bool bc = false;
 
 
  ba = check_id(id);
  if(ba)
  {
 
-     af.update(id,ui->lineEdit_narticle->text(),ui->lineEdit_auteur->text(),ui->lineEdit_type->text());
+     bc = af.update(id,ui->lineEdit_narticle->text(),ui->lineEdit_auteur->text(),ui->lineEdit_type->text());
+     if(bc == true)
+     {
+         player->setMedia(QUrl::fromLocalFile("C:/Users/sofia/OneDrive/Documents/integration_projet_cpp/modification.mp3"));
+         player->play();
 
+
+     }
 
 
  ui->Tab_historique->setModel(afficher_historique());
@@ -193,13 +278,22 @@ void module_article::on_pushButton_5_clicked()
     emissions a;
 
 
-    QString ageS="",tr="";
+    bool testE=false;
     a.set_nom_emision(ui->lineEdit_nome->text());
     a.set_nom_presentateur(ui->lineEdit_nomp->text());
     a.set_id(ui->lineEdit_idE->text());
-    a.ajouter();
+    testE = a.ajouter();
     //ageS = ui->lineEdit_4->text();
     //a.setage(ageS.toInt());
+    qDebug() << testE;
+    if(testE == true)
+    {
+        player->setMedia(QUrl::fromLocalFile("C:/Users/sofia/OneDrive/Documents/integration_projet_cpp/ajout.mp3"));
+        player->play();
+
+
+
+    }
 
 
     ui->lineEdit_nome->setText("");
@@ -213,8 +307,16 @@ void module_article::on_pushButton_5_clicked()
 
 void module_article::on_pushButton_4_clicked()
 {
+    int test = 0;
     emissions E1;E1.set_id(ui->lineEdit_idSE->text());
-    E1.supprimer(E1.get_id());
+    test = E1.supprimer(E1.get_id());
+    if(test)
+    {
+        player->setMedia(QUrl::fromLocalFile("C:/Users/sofia/OneDrive/Documents/integration_projet_cpp/suppression.mp3"));
+        player->play();
+
+
+    }
     ui->Tab_Emissions->setModel(ef.afficher(get_e()));
     ui->Tab_historique->setModel(afficher_historique());
 }
@@ -260,13 +362,21 @@ void module_article::on_pushButton_4_clicked()
 void module_article::on_pushButton_6_clicked()
 {
     QString id = ui->lineEdit_idE->text();
-    bool ba;
+    bool ba=false;
+    bool bc=false;
 
 
  ba = check_idE(id);
  if(ba)
  {
-      ef.update(id,ui->lineEdit_nome->text(),ui->lineEdit_nomp->text());
+      bc = ef.update(id,ui->lineEdit_nome->text(),ui->lineEdit_nomp->text());
+      if(bc == true)
+      {
+          player->setMedia(QUrl::fromLocalFile("C:/Users/sofia/OneDrive/Documents/integration_projet_cpp/modification.mp3"));
+          player->play();
+
+
+      }
 
      ui->Tab_historique->setModel(afficher_historique());
      ui->Tab_Emissions->setModel(ef.afficher(get_e()));
@@ -624,3 +734,21 @@ void module_article::on_pushButton_17_clicked()
 
 
 
+
+
+
+
+void module_article::on_pushButton_15_clicked()
+{
+
+}
+
+void module_article::on_pushButton_21_clicked()
+{
+
+}
+
+void module_article::on_pushButton_20_clicked()
+{
+
+}

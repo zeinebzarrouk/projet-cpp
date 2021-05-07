@@ -18,9 +18,9 @@ public:
     void set_nom_emision(QString n);
     void set_nom_presentateur(QString n);
     void set_id(QString n);
-    void ajouter();
+    bool ajouter();
     QSqlQueryModel* afficher(int a);
-    void supprimer(QString id);
+    int supprimer(QString id);
     bool update(QString id,QString nom_emision,QString nom_presentateur);
     int controle_saisieE(QString nom_emision,QString nom_presentateur,QString id);
 private:

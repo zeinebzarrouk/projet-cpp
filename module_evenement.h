@@ -6,6 +6,7 @@
 #include <QProgressBar>
 #include <QSlider>
 #include<QObject>
+#include <QMediaPlayer>
 namespace Ui {
 class module_evenement;
 }
@@ -51,11 +52,32 @@ private slots:
     void on_pushButton_16_clicked();
 
     void on_pushButton_login_clicked();
-    void myfunction();
 
+    void on_open_clicked();
+
+    void on_play_clicked();
+
+    void on_pause_clicked();
+
+    void on_stop_clicked();
+
+    void on_mute_clicked();
+
+    void on_volume_valueChanged(int value);
+
+    void on_pushButton_imprimer_clicked();
+
+    void on_web_clicked();
+
+public slots :
+
+    //void finTempo();
+    void myfunction();
 private:
     Ui::module_evenement *ui;
     QTimer *timer;
+    QMediaPlayer *mMediaPlayer;
+    QString mFilename;
 };
 
 #endif // MODULE_EVENEMENT_H

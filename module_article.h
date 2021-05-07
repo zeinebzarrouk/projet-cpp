@@ -5,8 +5,14 @@
 #include "articles.h"
 #include "emissions.h"
 #include "smtp.h"
-//#include "menu.h"
 #include <QFileDialog>
+#include <QMediaPlayer>
+#include <QTimer>
+#include <QDateTime>
+#include "alarme.h"
+#include "arduino.h"
+#include "popup.h"
+
 
 namespace Ui {
 class module_article;
@@ -33,6 +39,7 @@ private slots:
     void mailSent(QString);
     void browse();
     void browse2();
+    void fintempo();
     void on_pushButton_10_clicked();
 
     void on_pushButton_11_clicked();
@@ -69,8 +76,17 @@ private slots:
 
     void on_pushButton_17_clicked();
 
+    void on_pushButton_7_clicked();
+
+    void on_pushButton_9_clicked();
+
 private:
     Ui::module_article *ui;
+    QMediaPlayer* player;
+    arduino ad;
+     QTimer *timer;
+     Alarme al;
+     PopUp *popUp;
     //menu menu;
     int a,e;
    Articles af;
