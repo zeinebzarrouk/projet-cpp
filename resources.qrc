@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/images"/>
+    <qresource prefix="/">
+        <file>images/control_pause.png</file>
+        <file>images/control_play.png</file>
+        <file>images/control_stop.png</file>
+        <file>images/file_sample.mp4</file>
+        <file>images/folder_page_white.png</file>
+        <file>images/images.qrc</file>
+        <file>images/smartnews.png</file>
+    </qresource>
+</RCC>

@@ -1,0 +1,31 @@
+<RCC>
+    <qresource prefix="/new/prefix1">
+        <file>control_pause.png</file>
+        <file>control_play.png</file>
+        <file>control_stop.png</file>
+        <file>file_sample.mp4</file>
+        <file>folder_page_white.png</file>
+        <file>images.qrc</file>
+        <file>smartnews.png</file>
+        <file>add-file (1).png</file>
+        <file>cutting.png</file>
+        <file>diskette.png</file>
+        <file>files (1).png</file>
+        <file>paste.png</file>
+        <file>redo.png</file>
+        <file>Save-as_37111.png</file>
+        <file>undo.png</file>
+        <file>world-wide-web.png</file>
+    </qresource>
+    <qresource prefix="/icons ">
+        <file>pdf.png</file>
+        <file>trier.png</file>
+        <file>food-showcase.png</file>
+        <file>homepage.png</file>
+        <file>recherche.png</file>
+        <file>add-file.png</file>
+        <file>delete.png</file>
+        <file>edit.png</file>
+        <file>follow.png</file>
+    </qresource>
+</RCC>
